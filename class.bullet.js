@@ -4,20 +4,23 @@ class Bullet extends BaseEntity {
   }
 
   update() {
+    //TODO: 4. Set this.energy to 0 when the bullet leaves the aren
     const max = gameState.size;
     if (this.x < 0) this.energy = 0;
     if (this.y < 0) this.energy = 0;
     if (this.x > max) this.energy = 0;
     if (this.y > max) this.energy = 0;
-    /*
-      SESSION #1 in the Bullet update method
 
-      TODO: 4. Set this.energy to 0 when the bullet leaves the arena
-      HINT: The size of the arena is gameState.size
-            If you want the bullets to wrap around, wrap this.x and this.y around and set this.energy to 0 when gameState.currentTime > this.creationTime + whatEverNumberOfSecondsYouWant ;)
-      SOLUTION: solution4.js
-    */
+    gameState.entities.some(entity => {
+      if (this.energy > 0 && entity.scoreReward && entity.energy > 0 && this.getDistance(entity,4).isClose) {
+        this.energy--;
+        entity.energy--;
 
+        entity.x += this.vx / 4;
+        entity.y += this.vx / 4;
+      }
+      return this.energy <= 0;
+    });
     /*
       SESSION #2 in the Bullet update method
 

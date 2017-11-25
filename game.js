@@ -1,6 +1,8 @@
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
+//TODO: создать модификаторы выстрелов, для обозначения этого модификатора пули должны быть разных цветов
+
 try {
   localStorage.checkIfLocaleStorageIsAccessible;
 } catch (err) {
@@ -67,11 +69,11 @@ const gameLoop = () => {
     ctx.globalCompositeOperation = 'xor';
     ctx.fillRect(0, gameState.size, gameState.size, -16);
     ctx.fillText(error, 0, gameState.size - 4);
-    // (re)throw the error so it shows in the Developer tool with a stack trace 
+    // (re)throw the error so it shows in the Developer tool with a stack trace
     throw error;
   }
 };
 
-// Kick the gameLoop once the sprites are loaded 
+// Kick the gameLoop once the sprites are loaded
 gameState.sprites.src = 'sprites.png';
 gameState.sprites.onload = gameLoop;

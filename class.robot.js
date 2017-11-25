@@ -35,9 +35,6 @@ class Robot extends BaseEntity {
     if (this.y < gameState.player.y) this.vy = 0.5;
     if (this.y > gameState.player.y) this.vy = -0.5;
 
-    if (this.getDistance(gameState.player, 8).isClose) {
-      gameState.player.energy--
-    }
     /*
       SESSION #1 in the Robot update method
 
@@ -48,6 +45,10 @@ class Robot extends BaseEntity {
             Increase the probability with the currentTime or the score to increase the speed of the robots, and the difficulty of the game
       SOLUTION: solution5.js
     */
+    const probability = .2;
+    const distanceToPlayer = this.getDistance(gameState.player, 8);
+    this.vx = (Math.random() < probability) ? Math.sign(distanceToPlayer.x) : 0;
+    this.vy = (Math.random() < probability) ? Math.sign(distanceToPlayer.y) : 0;
 
     /*
       SESSION #2 in the Robot update method
@@ -56,7 +57,9 @@ class Robot extends BaseEntity {
       HINT: The "body" of the sprites are 8x8
       SOLUTION: solution7.js
     */
-
+    if (this.getDistance(gameState.player, 8).isClose) {
+      gameState.player.energy--
+    }
     // move & render
     super.update();
     this.render();

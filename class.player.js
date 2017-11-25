@@ -29,10 +29,10 @@ class Player extends BaseEntity {
 
     //TODO: 3. Check gameState.keysDown to spawn a new Bullet and set its this.vx and this.vy
     let bulletVx,bulletVy;
-    bulletVx = gameState.keysDown.d || 0;
-    bulletVx -= gameState.keysDown.a || 0;
-    bulletVy = gameState.keysDown.s || 0;
-    bulletVy -= gameState.keysDown.w || 0;
+    bulletVx = gameState.keysDown.d || gameState.keysDown.D || 0;
+    bulletVx -= gameState.keysDown.a || gameState.keysDown.A || 0;
+    bulletVy = gameState.keysDown.s || gameState.keysDown.S || 0;
+    bulletVy -= gameState.keysDown.w || gameState.keysDown.W || 0;
 
     if (bulletVx || bulletVy) {
       const speed = 4;
@@ -41,6 +41,12 @@ class Player extends BaseEntity {
       )
     };
 
+    // test fuction for create new Robot
+    if (gameState.entities.filter((entity) => entity.sprite === 2).length < 16 ) {
+      gameState.entities.push(
+        new Robot()
+      )
+    }
     // move & render
     super.update();
     this.render();
