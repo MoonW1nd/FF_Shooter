@@ -18,6 +18,11 @@ class Bullet extends BaseEntity {
 
         entity.x += this.vx / 4;
         entity.y += this.vx / 4;
+
+        if (entity.energy <= 0) {
+            gameState.score += entity.scoreReward;
+            gameState.entities.push(new Robot(), new Robot());
+        }
       }
       return this.energy <= 0;
     });

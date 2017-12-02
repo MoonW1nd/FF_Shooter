@@ -42,11 +42,11 @@ class Player extends BaseEntity {
     };
 
     // test fuction for create new Robot
-    if (gameState.entities.filter((entity) => entity.sprite === 2).length < 16 ) {
-      gameState.entities.push(
-        new Robot()
-      )
-    }
+    // if (gameState.entities.filter((entity) => entity.sprite === 2).length < 16 ) {
+    //   gameState.entities.push(
+    //     new Robot()
+    //   )
+    // }
     // move & render
     super.update();
     this.render();
