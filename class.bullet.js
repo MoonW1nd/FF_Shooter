@@ -1,3 +1,4 @@
+/* eslint-disable */
 class Bullet extends BaseEntity {
   constructor(x, y, vx, vy) {
     super(BaseEntity.sprite.bullet, 1, x, y, vx, vy);

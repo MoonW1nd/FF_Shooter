@@ -1,3 +1,4 @@
+/* eslint-disable */
 class BaseEntity {
   constructor(sprite, energy, x, y, vx = 0, vy = 0) {
     this.x = x;

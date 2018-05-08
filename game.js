@@ -1,3 +1,4 @@
+/* eslint-disable */
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
@@ -33,36 +34,40 @@ onkeyup = e => delete gameState.keysDown[e.key];
 let then = Date.now();
 const gameLoop = () => {
   try {
-
-    // Schedule next gameLoop update, clear the canvas, set the globalCompositeOperation
     requestAnimationFrame(gameLoop);
+    let playerAlive = gameState.player.energy > 0;
+    // Schedule next gameLoop update, clear the canvas, set the globalCompositeOperation
     canvas.width = canvas.height = gameState.size;
     ctx.globalCompositeOperation = 'lighten';
 
     // Update time
     gameState.currentTime = Math.round(performance.now()) / 1000;
 
-    // Display the Health, Score and High Score
-    ctx.fillStyle = 'rgba(200,255,255,.3)';
-    ctx.fillText('Health: ' + gameState.player.energy, 28, 28);
-    ctx.fillText('Score: ' + gameState.score, 28, 44);
-    if (gameState.score > gameState.hiScore)
-      localStorage.hiScore = gameState.hiScore = gameState.score;
-    ctx.fillText('High score: ' + gameState.hiScore, 28, 60);
+    if (playerAlive) {
+      // Display the Health, Score and High Score
+      ctx.fillStyle = 'rgba(200,255,255,.3)';
+      ctx.fillText('Health: ' + gameState.player.energy, 28, 28);
+      ctx.fillText('Score: ' + gameState.score, 28, 44);
+      if (gameState.score > gameState.hiScore)
+        localStorage.hiScore = gameState.hiScore = gameState.score;
+      ctx.fillText('High score: ' + gameState.hiScore, 28, 60);
 
-    // Display some debug output
-    ctx.fillText(gameState.currentTime, 0, 76);
-    ctx.fillText(gameState.entities.length + ' entities', 0, 92);
-    ctx.fillText('gameState.keysDown: ' + Object.keys(gameState.keysDown), 0, 108);
-
-    // Update the player and entities
+      // Display some debug output
+      ctx.fillText(gameState.currentTime, 0, 76);
+      ctx.fillText(gameState.entities.length + ' entities', 0, 92);
+      ctx.fillText('gameState.keysDown: ' + Object.keys(gameState.keysDown), 0, 108);
+    } else {
+      // Update the player and entities
+      ctx.fillStyle = '#fff';
+      ctx.font = "24px serif";
+      ctx.fillText('You Are Dead!', 50, gameState.size / 2 )
+    }
     gameState.player.update();
     gameState.entities.forEach(entity => entity.update());
 
     // Filter out dead entities
     gameState.entities =
       gameState.entities.filter(entity => entity.energy > 0);
-
   // Catch and show any errors to save precious debugging time during the coding sessions
   } catch (error) {
     ctx.fillStyle = '#f06';

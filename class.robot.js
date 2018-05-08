@@ -1,3 +1,4 @@
+/* eslint-disable */
 class Robot extends BaseEntity {
   constructor() {
     const robotType = Math.floor((Math.random() ** 3) * 4);
